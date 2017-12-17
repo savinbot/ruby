@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b User:
+  = @deposit.user
+%p
+  %b Coins:
+  = @deposit.coins
+
+= link_to 'Edit', edit_deposit_path(@deposit)
+\|
+= link_to 'Back', deposits_path

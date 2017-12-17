@@ -1,0 +1,16 @@
+= form_for @deposit do |f|
+  - if @deposit.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@deposit.errors.count, "error")} prohibited this deposit from being saved:"
+      %ul
+        - @deposit.errors.full_messages.each do |message|
+          %li= message
+
+  .field
+    = f.label :user
+    = f.text_field :user
+  .field
+    = f.label :coins
+    = f.text_field :coins
+  .actions
+    = f.submit 'Save'
