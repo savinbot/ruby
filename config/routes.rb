@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
   
-  resources :deposits
+
   get 'users/index'
   
   resources :users
+  resources :deposits
+
 
   devise_for :users
   #

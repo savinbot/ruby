@@ -1,0 +1,43 @@
+#!/usr/bin/env ruby
+
+require 'telegram/bot'
+
+token = '509268276:AAGfLj78RNS3BzmpUFnqo_nbZXkLdRJAeh0'
+
+Telegram::Bot::Client.run(token, logger: Logger.new($stderr)) do |bot|
+  bot.logger.info('Bot has been started')
+  bot.listen do |message|
+    case message
+
+    when Telegram::Bot::Types::CallbackQuery
+
+    if message.data == 'touch'
+      bot.api.send_message(chat_id: message.from.id, text: "Don't touch me!")
+    end
+    
+    when Telegram::Bot::Types::Message
+      if message.text == "\xF0\x9F\x92\xB0 Мой банк"
+	    kb = [
+	      Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Пополнить', callback_data: 'touch'),
+	      Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Вывести', callback_data: 'touch'),
+	      Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Открыть депозит', callback_data: 'touch'),
+	      Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Ваши депозиты', callback_data: 'touch'),
+	      Telegram::Bot::Types::InlineKeyboardButton.new(text: 'История транзакций', callback_data: 'touch'),
+	      Telegram::Bot::Types::InlineKeyboardButton.new(text: 'Заявки на вывод', callback_data: 'touch')
+	    ]
+	     markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb, resize_keyboard: true)
+	     bot.api.send_message(chat_id: message.chat.id, text: 'Мой банк', reply_markup: markup)
+      
+      elsif message.text == "/start"
+         bank = "\xF0\x9F\x92\xB0 Мой банк"
+         partners = "\xF0\x9F\x91\xAF Партнеры"
+         settings = "\xF0\x9F\x94\xA7 Настройки"
+         about = "\xF0\x9F\x94\xA7 О сервисе"
+         question = 'Меню'
+         answers = Telegram::Bot::Types::ReplyKeyboardMarkup
+              .new(keyboard: [[bank, partners],[settings, about]], one_time_keyboard: false, resize_keyboard: true)
+         bot.api.send_message(chat_id: message.chat.id, text: question, reply_markup: answers)
+      end
+    end
+  end
+end
