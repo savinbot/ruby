@@ -2,7 +2,7 @@
 
 require 'telegram/bot'
 
-token = '509268276:AAGfLj78RNS3BzmpUFnqo_nbZXkLdRJAeh0'
+token = '476911564:AAEl5h85lXnQPMkGVzvEEdc3Bvgu-ZRdF6U'
 
 Telegram::Bot::Client.run(token, logger: Logger.new($stderr)) do |bot|
   bot.logger.info('Bot has been started')
